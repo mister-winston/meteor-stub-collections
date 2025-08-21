@@ -1,5 +1,4 @@
 import { Mongo } from 'meteor/mongo';
-import { Random } from 'meteor/random';
 import sinon from 'sinon';
 
 const StubCollections = (() => {
@@ -13,6 +12,7 @@ const StubCollections = (() => {
   };
 
   publicApi.stub = (collections) => {
+    return;
     const pendingCollections = collections || privateApi.collections;
     [].concat(pendingCollections).forEach((collection) => {
       if (!privateApi.pairs.has(collection)) {
@@ -50,24 +50,16 @@ const StubCollections = (() => {
       if (symbol === 'simpleSchema') return;
       if (typeof local[symbol] !== 'function') return;
       if (typeof real[symbol] !== 'function') return;
-      privateApi.sandbox.stub(real, symbol).callsFake(
-        local[symbol].bind(local),
-      );
+      privateApi.sandbox.stub(real, symbol).callsFake(local[symbol].bind(local));
     });
   };
 
   privateApi.stubPair = (pair) => {
-    privateApi.assignLocalFunctionsToReal(
-      pair.localCollection,
-      pair.collection,
-    );
+    privateApi.assignLocalFunctionsToReal(pair.localCollection, pair.collection);
     // If using `matb33:collection-hooks`, make sure direct functions are also
     // stubbed.
     if (pair.collection.direct) {
-      privateApi.assignLocalFunctionsToReal(
-        pair.localCollection,
-        pair.collection.direct,
-      );
+      privateApi.assignLocalFunctionsToReal(pair.localCollection, pair.collection.direct);
     }
   };
 
