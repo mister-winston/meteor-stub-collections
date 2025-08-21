@@ -16,19 +16,16 @@ Npm.depends({
 });
 
 Package.onUse(function onUse(api) {
-  api.versionsFrom('3.3');
-  api.use([
-    'ecmascript',
-    'mongo',
-  ]);
+  api.versionsFrom(['2.16', '3.3']);
+  api.use(['ecmascript', 'mongo']);
   api.mainModule('index.js');
 });
 
 Package.onTest(function onTest(api) {
   api.use([
     'hwillson:stub-collections',
-    'aldeed:simple-schema@1.5.3',
-    'aldeed:collection2@2.10.0',
+    'aldeed:simple-schema',
+    'aldeed:collection2',
     'ecmascript',
     'mongo',
     'lmieulet:meteor-coverage@2.0.2', // Needed until https://github.com/meteortesting/meteor-mocha/pull/69 is merged
